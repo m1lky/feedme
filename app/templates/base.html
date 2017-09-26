@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css" src="{{url_for('static', filename='css/bulma.min.css')}}"></style>
+    <style type="text/css" src="{{url_for('static', filename='css/style.css')}}"></style>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bulma.min.css')}}" />
+
+    <script type="text/javascript" src="{{ url_for('static', filename='javascript/posts.js') }}"></script>
+
+    <title>Feed Me</title>
+    {% block head %}
+    
+    {% endblock %}
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li><a href="/import_sources">Import Sources</a></li>
+                <li><a href="/sources">Sources</a></li>
+                <li><a href="/">Posts</a></li>
+                <li id="crawl_link"><a href="#" onclick="crawl_posts()">Crawl</a></li>
+            </ul>
+        </div>
+        
+        <div id="content">{% block content %}{% endblock %}</div>
+        <div id="footer">
+            {% block footer %}
+            
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

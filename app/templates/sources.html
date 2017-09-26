@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+	{% if(errors) %}
+		{% for s in errors %}
+			<div> Duplicate: {{ s }} </div>
+		{% endfor %}
+	{% endif %}
+	<br>
+	Sources:
+	<br>
+	<ul>
+		{% for s in sources %}
+		<li>
+			<span>{{ s['url'] }}</span>&nbsp<span>{{ s['category'] }}</span>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
