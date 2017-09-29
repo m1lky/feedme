@@ -1,8 +1,8 @@
 import sqlite3
 from .database import database
 class log(database):
-	def __init__(self, dbname):
-		database.__init__(self, dbname)
+	def __init__(self):
+		database.__init__(self)
 		self.table_name = 'logs'
 		self.columns = ['event', 'description', 'timestamp', 'hash']
 		self.hash_columns = ['event', 'description', 'timestamp']

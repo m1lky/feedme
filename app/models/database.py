@@ -17,8 +17,9 @@ class database:
 			d[col[0]] = row[idx]
 		return d
 
-	def __init__(self, dbname):
-		self.conn = sqlite3.connect(dbname)
+	def __init__(self):
+		self.conn = sqlite3.connect('./database/feedme', timeout=10)
+		self.conn.execute("PRAGMA journal_mode=WAL")
 		self.conn.row_factory = self.dict_factory
 		self.cursor = self.conn.cursor()	
 
@@ -70,6 +71,7 @@ class database:
 			self.cursor.execute('insert into ' + self.table_name + '(' + col_statement[:-1] + ') values(' + sanitizing_marks+')', values)
 			self.conn.commit()
 		except Exception as e:
+			print(e)
 			raise
 		return True
 

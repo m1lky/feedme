@@ -8,7 +8,6 @@ from .models import source as source_model
 from crawler import crawler
 from flask import Flask, render_template, redirect
 import config
-DB_SOURCE = "feedme"
 
 #configs
 def is_number(s):
@@ -43,7 +42,7 @@ def redirect_to_page():
 @app.route('/posts/<page>/')
 def posts(page):
 
-	post = post_model.post(DB_SOURCE)
+	post = post_model.post()
 
 	# round down to the closest multiple of page_size to get the page total
 	# add 1 to compensate for offset
@@ -64,17 +63,17 @@ def posts(page):
 	return render_template('posts.html', posts=post_list, page_count=page_count)
 @app.route('/crawl')
 def crawl():
-	c = crawler(DB_SOURCE)
+	c = crawler()
 	c.crawl_posts(c.get_sources()[:2])
 	return "True"
 @app.route('/sources/')
 def sources():
-	source = source_model.source(DB_SOURCE)
+	source = source_model.source()
 	sources = source.get_all()
 	return render_template('sources.html', sources=sources)
 @app.route('/import_sources/')
 def import_sources():
-	source = source_model.source(DB_SOURCE)
+	source = source_model.source()
 	errored_sources = source.import_sources('sources.txt')
 	sources = source.get_all()
 	return render_template('sources.html',sources=sources, errors=errored_sources)

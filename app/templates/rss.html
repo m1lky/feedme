@@ -1,0 +1,30 @@
+{% block atom %}
+<div class="card" style="box-shadow: 0px 3px 5px #888888;">
+	{% if p['image'] is not sameas '0' %}
+		<div class="card-image">
+			<figure class="image is-4by3">
+				<img src="{{ p['image'] }}" alt="Placeholder image">
+			</figure>
+		</div>
+	{% endif %}
+	<div class="card-content">
+		<div class="media">
+			<div class="media-content">
+				<p class="title is-4">{{ p['title'] }}</p>
+						<p class="subtitle is-6"><a href="{{ p['link'] }}"> {{ p['link']|website }}</a></p>
+				
+			</div>
+		</div>
+
+		<div class="content">
+			{{ p['description']|safe }}
+			<br>
+			<span class="level">
+				<button class="button level-left" onclick="get_content({{ p['hash'] }})">See full</button>
+				<span class=" level-right">Crawled at:&nbsp{{ p['timestamp']|datetime }}</span>&nbsp<span class="level-right">Posted at:&nbsp{{ p['published']|datetime}}</span>
+			</span>
+		</div>
+	</div>
+</div>
+<br>
+{% endblock %}

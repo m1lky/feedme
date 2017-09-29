@@ -1,64 +1,36 @@
 {% extends "base.html" %}
-{% block head %}
-
-
-{% endblock %}
 
 {% block content %}
-{% if error %}
-<section class="hero">
-	<div class="hero-body">
-		<div class="container">
-			<h1 class="title">
-				Error:
-			</h1>
-			<h2 class="subtitle">
-				Database is locked, try again in a moment.
-			</h2>
-		</div>
-	</div>
-</section>
-{% else %}
-{% for p in posts %}
-	
-<div class="card" style="box-shadow: 0px 3px 5px #888888;">
-	{% if p['image'] is not sameas '0' %}
-		<div class="card-image">
-			<figure class="image is-4by3">
-				<img src="{{ p['image'] }}" alt="Placeholder image">
-			</figure>
+	{% if error %}
+		<section class="hero">
+			<div class="hero-body">
+				<div class="container">
+					<h1 class="title">
+						Error:
+					</h1>
+					<h2 class="subtitle">
+						Database is locked, try again in a moment.
+					</h2>
+				</div>
+			</div>
+		</section>
+	{% else %}
+		{% for p in posts %}
+			{% if p.type == 'rss' %}
+				{% include "rss.html" %}
+			{% else %}
+				{% include "atom.html" %}
+			{% endif %}
+		{% endfor %}
+		<div id="modal" class="modal">
+			<div class="modal-background"></div>
+			<div id="modal-content" class="modal-content">
+			
+			</div>
+			<button class="modal-close is-large" aria-label="close"></button>
 		</div>
 	{% endif %}
-	<div class="card-content">
-		<div class="media">
-			<div class="media-content">
-				<p class="title is-4">{{ p['title'] }}</p>
-						<p class="subtitle is-6"><a href="{{ p['link'] }}"> {{ p['link']|website }}</a></p>
-				
-			</div>
-		</div>
 
-		<div class="content">
-			{{ p['description']|safe }}
-			<br>
-			<span class="level">
-				<button class="button level-left" onclick="get_content({{ p['hash'] }})">See full</button>
-				<span class=" level-right">Crawled at:&nbsp{{ p['timestamp']|datetime }}</span>&nbsp<span class="level-right">Posted at:&nbsp{{ p['published']|datetime}}</span>
-			</span>
-		</div>
-	</div>
-</div>
-<br>
-{% endfor %}
-
-<div id="modal" class="modal">
-	<div class="modal-background"></div>
-	<div id="modal-content" class="modal-content">
-	
-	</div>
-	<button class="modal-close is-large" aria-label="close"></button>
-</div>
-{% endif %}
 {% endblock %}
 
 {% block footer %}
@@ -75,7 +47,7 @@
 		<a href="/posts/{{ request.path[-2:-1]|int - 1 }}">Previous</a>
 	</span>
 	{% endif %}
-	{% if request.path[-2:-1]|int < page_count - 1 %}
+	{% if request.path[-2:-1]|int < page_count - 2 %}
 	<span class="pagination-next">
 		<a class="pagination-next" href="/posts/{{ request.path[-2:-1]|int + 1 }}">Next page</a>
 	</span>

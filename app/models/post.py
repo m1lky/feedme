@@ -1,8 +1,8 @@
 import sqlite3
 from .database import database
 class post(database):
-	def __init__(self, dbname):
-		database.__init__(self, dbname)
+	def __init__(self):
+		database.__init__(self)
 		self.table_name = 'posts'
 		self.columns = ['title', 'link', 'description', 'timestamp', 'website', 'published', 'image', 'feed_type', 'content', 'hash']
 		self.hash_columns = ['title', 'link', 'published']
@@ -23,8 +23,10 @@ class post(database):
 		where_clause = ""
 		if('website' in parameters):
 			where_clause += " where website like '%" + parameters['website'] + "%'"
-		#todo: add category filter			
+		#todo: add category filter
+		
 		result = self.cursor.execute('select * from posts'+where_clause+' order by timestamp limit '+str(self.page_size)+" offset "+str(offset)).fetchall()
+				
 		return result
 
 	

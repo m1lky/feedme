@@ -2,8 +2,8 @@ from .database import database
 import sqlite3
 
 class source(database):
-	def __init__(self, dbname):
-		database.__init__(self, dbname)
+	def __init__(self):
+		database.__init__(self)
 		self.columns = ['hash', 'url', 'category']
 		self.hash_columns = ['url', 'category']
 		self.table_name = "sources"
