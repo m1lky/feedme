@@ -4,7 +4,7 @@
     <style type="text/css" src="{{url_for('static', filename='css/bulma.min.css')}}"></style>
     <style type="text/css" src="{{url_for('static', filename='css/style.css')}}"></style>
     <link rel="stylesheet" href="{{url_for('static', filename='css/bulma.min.css')}}" />
-
+    <link href="{{url_for('static', filename='css/bootstrap-select.min.css')}}" rel="stylesheet" />
     <script type="text/javascript" src="{{ url_for('static', filename='javascript/posts.js') }}"></script>
 
     <title>Feed Me</title>
@@ -20,6 +20,7 @@
                 <li><a href="/sources">Sources</a></li>
                 <li><a href="/">Posts</a></li>
                 <li id="crawl_link"><a href="#" onclick="crawl_posts()">Crawl</a></li>
+                <li><a href="/prune">Prune</a></li>
             </ul>
         </div>
         

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 	{% if error %}
 		<section class="hero">
@@ -15,8 +14,10 @@
 			</div>
 		</section>
 	{% else %}
+		{% include "filter_posts.html" %}
+
 		{% for p in posts %}
-			{% if p.type == 'rss' %}
+			{% if p.type == "rss" %}
 				{% include "rss.html" %}
 			{% else %}
 				{% include "atom.html" %}

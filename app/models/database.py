@@ -37,12 +37,12 @@ class database:
 					hash_string += str(to_hash[c])
 		else:
 			hash_string = to_hash
-		return ba.crc32(bytearray(hash_string, 'utf-8'))
+		return ba.crc32(bytearray(hash_string, 'utf-8')) 
+		
 	# insert into table if not duplicate based on hash of hash_columns property
 	# @return bool successful
 	def insert(self, insert_dict):
 		duplicate = False
-		#need to cast separately, otherwise it casts the function itself to string
 		checksum = self.compute_crc32(insert_dict)
 		self.cursor.execute("select count(hash) from " + self.table_name +" where hash = ?", [checksum])
 		result = self.cursor.fetchall()
@@ -68,10 +68,10 @@ class database:
 				values.append(False)
 		sanitizing_marks = ("?," * len(values))[:-1]
 		try:
-			self.cursor.execute('insert into ' + self.table_name + '(' + col_statement[:-1] + ') values(' + sanitizing_marks+')', values)
+			query = 'insert into ' + self.table_name + '(' + col_statement[:-1] + ') values(' + sanitizing_marks+')'
+			self.cursor.execute(query, values)
 			self.conn.commit()
 		except Exception as e:
-			print(e)
 			raise
-		return True
+		return checksum
 

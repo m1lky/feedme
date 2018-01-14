@@ -19,7 +19,7 @@ function crawl_posts(){
 	console.log('beginning of crawl posts');
 	var url = '/crawl';
 	document.getElementById('crawl_link').innerHtml = '<span class="loader"></span>';
-	async_request(url, function(){crawl_callback();})
+	async_request(url, function(){crawl_callback();});
 }
 function crawl_callback(){
 	console.log("callback");
@@ -36,4 +36,20 @@ function async_request(url, callback){
     };
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
+}
+function request_suggestions(source){
+	var url = '/filter_suggestion/' + source.id;
+	async_request(url, suggestion_callback);
+}
+function suggestion_callback(response){
+	console.log(response);
+}
+
+function delete_post(post_hash){
+	var url = '/delete/post/'+post_hash;
+	console.log(url)
+	async_request(url, function(){delete_post_callback();});
+}
+function delete_post_callback(response){
+	console.log(response);
 }

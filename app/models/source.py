@@ -28,6 +28,10 @@ class source(database):
 					errored_sources.append(src_arr[0])
 		self.conn.commit()
 		return errored_sources
-	def get_all(self):
-		return self.cursor.execute('select * from sources').fetchall()
-		
+
+	def get_all(self, what_to_get = "*"):
+		return self.cursor.execute('select ' + what_to_get + ' from sources order by category').fetchall()
+	
+	def delete(self, value, by_clause="hash"):
+		self.cursor.execute("delete from sources where ? = ?", [by_clause, value])
+		self.conn.commit()
